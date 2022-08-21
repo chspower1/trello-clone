@@ -8,6 +8,9 @@ import { RecoilRoot } from "recoil";
 
 const GlobalStyle = createGlobalStyle`
     ${reset}
+    button{
+        border: none;
+    }
 `;
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 
