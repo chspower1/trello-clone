@@ -33,12 +33,31 @@ function App() {
     const [toDos, setToDos] = useRecoilState(toDoState);
     const onDragEnd = ({ draggableId, destination, source }: DropResult) => {
         console.log(draggableId, destination, source);
-        setToDos((prev) => {
-            const resultToDos = { ...prev };
-            console.log(Object.values(resultToDos[destination?.droppableId!]));
-            console.log(resultToDos);
-            return resultToDos;
-        });
+        if (destination === null) return;
+        if (destination?.droppableId === source.droppableId) {
+            setToDos((prev) => {
+                const resultBoard = [...prev[destination.droppableId]];
+                resultBoard.splice(source.index, 1);
+                resultBoard.splice(destination.index, 0, draggableId);
+                console.log(resultBoard);
+                return {
+                    ...prev,
+                    [destination.droppableId]: resultBoard,
+                };
+            });
+        } else if (destination?.droppableId !== source.droppableId) {
+            setToDos((prev) => {
+                const startBoard = [...prev[source.droppableId]];
+                const resultBoard = [...prev[destination?.droppableId!]];
+                startBoard.splice(source.index, 1);
+                resultBoard.splice(destination?.index!, 0, draggableId);
+                return {
+                    ...prev,
+                    [source.droppableId]: startBoard,
+                    [destination?.droppableId!]: resultBoard,
+                };
+            });
+        }
     };
 
     // console.log(toDos);
