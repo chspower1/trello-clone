@@ -6,6 +6,7 @@ import { categoriesState, toDoState } from "../atom";
 import { DelBtn } from "./DragabbleCard";
 
 export const Container = styled.div`
+    z-index: 1000;
     position: absolute;
     place-self: start center;
     width: 400px;
@@ -26,9 +27,11 @@ const RadioContainer = styled.div`
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    flex-wrap: wrap;
 `;
 const RadioBox = styled(RadioContainer)`
     margin-right: 10px;
+    margin-bottom: 10px;
     flex-direction: column;
     background-color: #636e72;
     padding: 5px;

@@ -19,15 +19,24 @@ const Container = styled.div`
     background: linear-gradient(135deg, #ffffff, #bbbbbb);
 `;
 const Title = styled.h1`
+    text-align: center;
     font-size: 48px;
-    margin-bottom: 100px;
+    margin: 100px 0px;
 `;
 const CreateToDoBtn = styled.button`
     font-size: 20px;
+    transition: all 0.3s ease;
+    &:hover {
+        color: #0984e3;
+        background-color: #cde6ff;
+    }
 `;
 const CreateCategoryBtn = styled(CreateToDoBtn)``;
 const Boards = styled.div`
+    width: 100%;
+    margin: 0px auto;
     display: flex;
+    justify-content: center;
     flex-wrap: wrap;
 `;
 const MenuContainer = styled.div`

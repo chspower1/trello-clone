@@ -2,11 +2,13 @@ import { DraggableId, Droppable } from "@hello-pangea/dnd";
 import { useRef } from "react";
 import styled from "styled-components";
 import { ToDo, toDoState } from "../atom";
-import DragabbleCard from "./DragabbleCard";
+import DragabbleCard, { DelBtn } from "./DragabbleCard";
 import { useForm } from "react-hook-form";
-import { useSetRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { categoriesState } from "./../atom";
 
 export const Wrapper = styled.div`
+    position: relative;
     width: 300px;
     height: 500px;
     background-color: ${(props) => props.theme.accentColor};
@@ -20,6 +22,10 @@ const Title = styled.h1`
     font-weight: bolder;
     margin: 16px;
     color: black;
+`;
+const BoardDelBtn = styled(DelBtn)`
+    position: absolute;
+    right: 0px;
 `;
 const Area = styled.div<{ isDraggingOver: boolean; draggingFromThisWith: boolean }>`
     transition: background 0.3s ease;
@@ -35,6 +41,7 @@ interface IForm {
 }
 function Board({ toDos, boardId }: IBoardProps) {
     const setToDos = useSetRecoilState(toDoState);
+    const [categories, setcategories] = useRecoilState(categoriesState);
     const { register, handleSubmit } = useForm<IForm>();
     const onvalid = ({ toDo }: IForm) => {
         const newToDo: ToDo = {
@@ -48,6 +55,16 @@ function Board({ toDos, boardId }: IBoardProps) {
     return (
         <Wrapper>
             <Title>{boardId}</Title>
+            <BoardDelBtn
+                onClick={() =>
+                    setcategories((prev) => {
+                        const resultCategories = prev.filter((category) => boardId !== category);
+                        return resultCategories;
+                    })
+                }
+            >
+                X
+            </BoardDelBtn>
             <Droppable droppableId={boardId}>
                 {(magic, snapshot) => (
                     <Area
