@@ -7,8 +7,8 @@ import { useForm } from "react-hook-form";
 import { useSetRecoilState } from "recoil";
 
 export const Wrapper = styled.div`
-    width: 200px;
-    height: 300px;
+    width: 300px;
+    height: 500px;
     background-color: ${(props) => props.theme.accentColor};
     margin: 20px;
     display: flex;

@@ -17,6 +17,7 @@ const GlobalStyle = createGlobalStyle`
         color:#2d3436;
     }
     body{
+        font-size:16px;
         font-family: "Sebang";
         box-sizing: border-box;
         color:#2d3436;

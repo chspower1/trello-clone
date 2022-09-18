@@ -5,6 +5,7 @@ import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { categoriesState, toDoState } from "./atom";
 import Board from "./components/Board";
+import CreateCategory from "./components/CreateCategory";
 import CreateToDo from "./components/CreateToDo";
 
 const Container = styled.div`
@@ -18,18 +19,33 @@ const Container = styled.div`
     background: linear-gradient(135deg, #ffffff, #bbbbbb);
 `;
 const Title = styled.h1`
-    font-size: 28px;
+    font-size: 48px;
     margin-bottom: 20px;
 `;
 const CreateToDoBtn = styled.button``;
+const CreateCategoryBtn = styled.button``;
 const Boards = styled.div`
     display: flex;
     flex-wrap: wrap;
+`;
+const MenuTitle = styled.div`
+    font-size: 18px;
+    margin-bottom: 5px;
+`;
+const MenuContainer = styled.div`
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+`;
+const MenuBox = styled(MenuContainer)`
+    flex-direction: column;
 `;
 
 function App() {
     const [toDos, setToDos] = useRecoilState(toDoState);
     const [onCreateForm, setOnCreateForm] = useState(false);
+    const [onCreateCategoryForm, setOnCreateCategoryForm] = useState(false);
     const onDragEnd = (info: DropResult) => {
         const { draggableId, destination, source } = info;
         console.log(draggableId, destination, source);
@@ -67,11 +83,30 @@ function App() {
         <DragDropContext onDragEnd={onDragEnd}>
             <Container>
                 <Title>Trello Clone Challenge!</Title>
-                {onCreateForm ? (
-                    <CreateToDo setOnCreateForm={setOnCreateForm}/>
-                ) : (
-                    <CreateToDoBtn onClick={() => setOnCreateForm((cur) => !cur)}>+</CreateToDoBtn>
-                )}
+                <MenuContainer>
+                    {onCreateForm ? (
+                        <CreateToDo setOnCreateForm={setOnCreateForm} />
+                    ) : (
+                        <MenuBox>
+                            <MenuTitle>To Do</MenuTitle>
+                            <CreateToDoBtn onClick={() => setOnCreateForm((cur) => !cur)}>
+                                +
+                            </CreateToDoBtn>
+                        </MenuBox>
+                    )}
+                    {onCreateCategoryForm ? (
+                        <CreateCategory setOnCreateCategoryForm={setOnCreateCategoryForm} />
+                    ) : (
+                        <MenuBox>
+                            <MenuTitle>Category</MenuTitle>
+                            <CreateCategoryBtn
+                                onClick={() => setOnCreateCategoryForm((cur) => !cur)}
+                            >
+                                +
+                            </CreateCategoryBtn>
+                        </MenuBox>
+                    )}
+                </MenuContainer>
                 <Boards>
                     {Object.keys(toDos).map((boardId) => (
                         <Board key={boardId} toDos={toDos[boardId]} boardId={boardId} />

@@ -13,15 +13,15 @@ export type ICategories = string[];
 
 export const categoriesState = atom<ICategories>({
     key: "Categories",
-    default: ["to_do", "doing", "done"],
+    default: ["To do", "Doing", "Done"],
     effects_UNSTABLE: [recoilPersist().persistAtom],
 });
 export const toDoState = atom<IToDoState>({
     key: "toDo",
     default: {
-        to_do: [],
-        doing: [],
-        done: [],
+        "To do": [],
+        Doing: [],
+        Done: [],
     },
     effects_UNSTABLE: [recoilPersist().persistAtom],
 });

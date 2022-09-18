@@ -3,9 +3,20 @@ import { useForm } from "react-hook-form";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { categoriesState, toDoState } from "../atom";
-import { Container, Title } from "./CreateCategory";
 import { DelBtn } from "./DragabbleCard";
 
+export const Container = styled.div`
+    position: absolute;
+    place-self: start center;
+    width: 400px;
+    padding: 6px 30px;
+    background-color: white;
+`;
+export const Title = styled.h1`
+    font-size: 26px;
+    margin-top: 15px;
+    margin-bottom: 20px;
+`;
 const Form = styled.form`
     display: flex;
     flex-direction: column;
@@ -13,15 +24,18 @@ const Form = styled.form`
 `;
 const RadioContainer = styled.div`
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
 `;
 const RadioBox = styled(RadioContainer)`
-    margin: 0px 10px;
+    margin-right: 10px;
     flex-direction: column;
+    background-color: #636e72;
+    padding: 5px;
+    color: white;
 `;
 const Label = styled.label<{ for: string }>`
-    font-size: 12px;
+    font-size: 18px;
     margin: 7px 0px;
 `;
 const Input = styled.input`
@@ -29,6 +43,7 @@ const Input = styled.input`
     padding: 5px;
     outline: none;
     background-color: #dfe6e9;
+    margin-bottom: 20px;
 `;
 const Error = styled.div`
     color: #d63031;
@@ -41,6 +56,7 @@ export const Btn = styled.button`
     place-self: end;
     margin: 10px 0px;
     padding: 5px;
+    font-size: 16px;
     background-color: ${(props) => props.theme.btnColor};
     color: ${(props) => props.theme.btnTextColor};
 `;
@@ -51,13 +67,12 @@ const CreateFormDelBtn = styled(DelBtn)`
 `;
 
 interface IForm {
-    text: string;
     category: string;
 }
 interface CreateFormProps {
-    setOnCreateForm: React.Dispatch<React.SetStateAction<boolean>>;
+    setOnCreateCategoryForm: React.Dispatch<React.SetStateAction<boolean>>;
 }
-export default function CreateToDo({ setOnCreateForm }: CreateFormProps) {
+export default function CreateCategory({ setOnCreateCategoryForm }: CreateFormProps) {
     const [toDos, setToDos] = useRecoilState(toDoState);
     const [categories, setCategories] = useRecoilState(categoriesState);
     const {
@@ -65,45 +80,46 @@ export default function CreateToDo({ setOnCreateForm }: CreateFormProps) {
         formState: { errors },
         handleSubmit,
         reset,
+        setError,
     } = useForm<IForm>();
 
-    const onvalid = ({ text, category }: IForm) => {
-        setToDos((prev) => {
-            return { ...prev, [category]: [...prev[category], { text, id: Date.now() }] };
-        });
-        reset();
+    const onvalid = ({ category }: IForm) => {
+        if (categories.includes(category)) {
+            setError("category", {
+                message: "이미 존재하는 카테고리 입니다.",
+            });
+        } else {
+            setToDos((prev) => {
+                return { ...prev, [category]: [] };
+            });
+            setCategories((prev) => {
+                return [...prev, category];
+            });
+            reset();
+        }
     };
     return (
         <Container>
-            <Title>Add to do</Title>
-            <CreateFormDelBtn onClick={() => setOnCreateForm((cur) => !cur)}>X</CreateFormDelBtn>
+            <Title>Add Category</Title>
+            <CreateFormDelBtn onClick={() => setOnCreateCategoryForm((cur) => !cur)}>
+                X
+            </CreateFormDelBtn>
             <Form onSubmit={handleSubmit(onvalid)}>
-                <Label for="text">To Do</Label>
+                <Label for="category">Category</Label>
                 <Input
-                    id="text"
+                    id="category"
                     type="text"
-                    {...register("text", {
-                        required: "할 일을 입력해주세요!",
+                    {...register("category", {
+                        required: "카테고리를 입력해주세요!",
                     })}
                 />
-                {errors.text && <Error>{errors.text.message}</Error>}
-                <Label for="category">Categories</Label>
+                {errors.category && <Error>{errors.category.message}</Error>}
+                <Label for="category">Current Categories List</Label>
                 <RadioContainer id="category">
                     {categories.map((category) => (
-                        <RadioBox>
-                            <Label for={category}>{category}</Label>
-                            <Input
-                                id={category}
-                                type="radio"
-                                value={category}
-                                {...register("category", {
-                                    required: "카테고리를 선택해주세요",
-                                })}
-                            />
-                        </RadioBox>
+                        <RadioBox>{category}</RadioBox>
                     ))}
                 </RadioContainer>
-                {errors.category && <Error>{errors.category.message}</Error>}
                 <Btn>click</Btn>
             </Form>
         </Container>
