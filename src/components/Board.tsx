@@ -18,7 +18,7 @@ const Title = styled.h1`
     text-align: center;
     font-size: 20px;
     font-weight: bolder;
-    margin: 25px;
+    margin: 16px;
     color: black;
 `;
 const Area = styled.div<{ isDraggingOver: boolean; draggingFromThisWith: boolean }>`

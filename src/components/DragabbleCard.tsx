@@ -1,5 +1,4 @@
 import { Draggable } from "@hello-pangea/dnd";
-import { Btn } from "./../App";
 import React from "react";
 import styled from "styled-components";
 import { ToDo } from "../atom";
@@ -19,7 +18,7 @@ const Card = styled.div<{ isDragging: boolean }>`
     background-color: ${(props) => (props.isDragging ? "#a5c3da" : "#dfe6e9")};
     border: 1px solid white;
 `;
-const DelBtn = styled.button`
+export const DelBtn = styled.button`
     background: none;
     transition: color 0.3s ease;
     color: #d47373;
