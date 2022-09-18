@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { categoriesState, toDoState } from "../atom";
-import { Container, Title } from "./CreateCategory";
+import { Btn, Container, Input, Label, Title } from "./CreateCategory";
 import { DelBtn } from "./DragabbleCard";
 
 const Form = styled.form`
@@ -20,30 +20,13 @@ const RadioBox = styled(RadioContainer)`
     margin: 0px 10px;
     flex-direction: column;
 `;
-const Label = styled.label<{ for: string }>`
-    font-size: 12px;
-    margin: 7px 0px;
-`;
-const Input = styled.input`
-    border: none;
-    padding: 5px;
-    outline: none;
-    background-color: #dfe6e9;
-`;
 const Error = styled.div`
     color: #d63031;
     font-size: 10px;
     place-self: end;
     margin: 5px 0px;
 `;
-export const Btn = styled.button`
-    width: 30%;
-    place-self: end;
-    margin: 10px 0px;
-    padding: 5px;
-    background-color: ${(props) => props.theme.btnColor};
-    color: ${(props) => props.theme.btnTextColor};
-`;
+
 const CreateFormDelBtn = styled(DelBtn)`
     position: absolute;
     right: 10px;

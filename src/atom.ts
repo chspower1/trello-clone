@@ -25,3 +25,7 @@ export const toDoState = atom<IToDoState>({
     },
     effects_UNSTABLE: [recoilPersist().persistAtom],
 });
+export const boardState = atom({
+    key: "boardState",
+    default: [],
+});

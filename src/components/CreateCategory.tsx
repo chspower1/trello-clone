@@ -34,11 +34,11 @@ const RadioBox = styled(RadioContainer)`
     padding: 5px;
     color: white;
 `;
-const Label = styled.label<{ for: string }>`
+export const Label = styled.label<{ for: string }>`
     font-size: 18px;
     margin: 7px 0px;
 `;
-const Input = styled.input`
+export const Input = styled.input`
     border: none;
     padding: 5px;
     outline: none;
@@ -89,11 +89,11 @@ export default function CreateCategory({ setOnCreateCategoryForm }: CreateFormPr
                 message: "이미 존재하는 카테고리 입니다.",
             });
         } else {
-            setToDos((prev) => {
-                return { ...prev, [category]: [] };
-            });
             setCategories((prev) => {
                 return [...prev, category];
+            });
+            setToDos((prev) => {
+                return { ...prev, [category]: [] };
             });
             reset();
         }

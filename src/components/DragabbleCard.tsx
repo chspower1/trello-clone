@@ -1,11 +1,13 @@
 import { Draggable } from "@hello-pangea/dnd";
 import React from "react";
 import styled from "styled-components";
-import { ToDo } from "../atom";
+import { ToDo, toDoState } from "../atom";
+import { useRecoilState } from "recoil";
 
 interface IDragabbleCardProps {
     toDo: ToDo;
     index: number;
+    boardId: string;
 }
 const Card = styled.div<{ isDragging: boolean }>`
     display: flex;
@@ -20,15 +22,18 @@ const Card = styled.div<{ isDragging: boolean }>`
 `;
 export const DelBtn = styled.button`
     background: none;
-    transition: color 0.3s ease;
-    color: #d47373;
+    transition: background-color 0.3s ease;
+    color: white;
+    padding: 5px 10px;
+    background-color: #d47373;
     &:hover {
-        color: #d63031;
+        background-color: #d63031;
     }
 `;
 
-function DragabbleCard({ toDo, index }: IDragabbleCardProps) {
+function DragabbleCard({ toDo, index, boardId }: IDragabbleCardProps) {
     console.log(toDo, "has been rendered");
+    const [toDos, setToDos] = useRecoilState(toDoState);
     return (
         <Draggable key={toDo.id} draggableId={String(toDo.id)} index={index}>
             {(magic, snapshot) => (
@@ -39,7 +44,17 @@ function DragabbleCard({ toDo, index }: IDragabbleCardProps) {
                     isDragging={snapshot.isDragging}
                 >
                     {toDo.text}
-                    <DelBtn>X</DelBtn>
+                    <DelBtn
+                        onClick={() =>
+                            setToDos((prev) => {
+                                const resultToDos = [...prev[boardId]];
+                                resultToDos.splice(index, 1);
+                                return { ...prev, [boardId]: resultToDos };
+                            })
+                        }
+                    >
+                        X
+                    </DelBtn>
                 </Card>
             )}
         </Draggable>

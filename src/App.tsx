@@ -12,7 +12,7 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
     width: 100vw;
-    height: 100vh;
+    min-height: 100vh;
     margin: 0 auto;
     justify-content: center;
     align-items: center;
@@ -20,30 +20,33 @@ const Container = styled.div`
 `;
 const Title = styled.h1`
     font-size: 48px;
-    margin-bottom: 20px;
+    margin-bottom: 100px;
 `;
-const CreateToDoBtn = styled.button``;
-const CreateCategoryBtn = styled.button``;
+const CreateToDoBtn = styled.button`
+    font-size: 20px;
+`;
+const CreateCategoryBtn = styled(CreateToDoBtn)``;
 const Boards = styled.div`
     display: flex;
     flex-wrap: wrap;
+`;
+const MenuContainer = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `;
 const MenuTitle = styled.div`
     font-size: 18px;
     margin-bottom: 5px;
 `;
-const MenuContainer = styled.div`
-    display: flex;
-
-    justify-content: center;
-    align-items: center;
-`;
 const MenuBox = styled(MenuContainer)`
     flex-direction: column;
+    margin: 5px 20px;
 `;
 
 function App() {
     const [toDos, setToDos] = useRecoilState(toDoState);
+    const [categories, setCategories] = useRecoilState(categoriesState);
     const [onCreateForm, setOnCreateForm] = useState(false);
     const [onCreateCategoryForm, setOnCreateCategoryForm] = useState(false);
     const onDragEnd = (info: DropResult) => {
@@ -108,7 +111,7 @@ function App() {
                     )}
                 </MenuContainer>
                 <Boards>
-                    {Object.keys(toDos).map((boardId) => (
+                    {categories.map((boardId) => (
                         <Board key={boardId} toDos={toDos[boardId]} boardId={boardId} />
                     ))}
                 </Boards>
