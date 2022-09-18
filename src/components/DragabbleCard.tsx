@@ -19,6 +19,7 @@ const Card = styled.div<{ isDragging: boolean }>`
     transition: background-color 1s ease;
     background-color: ${(props) => (props.isDragging ? "#a5c3da" : "#dfe6e9")};
     border: 1px solid white;
+    
 `;
 export const DelBtn = styled.button`
     background: none;

@@ -12,6 +12,9 @@ export const Container = styled.div`
     width: 400px;
     padding: 6px 30px;
     background-color: white;
+    @media screen and (max-width: 512px) {
+        width: 300px;
+    }
 `;
 export const Title = styled.h1`
     font-size: 26px;

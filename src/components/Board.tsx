@@ -25,6 +25,8 @@ const Title = styled.h1`
 `;
 const BoardDelBtn = styled(DelBtn)`
     position: absolute;
+    margin: 10px;
+    top: 3px;
     right: 0px;
 `;
 const Area = styled.div<{ isDraggingOver: boolean; draggingFromThisWith: boolean }>`

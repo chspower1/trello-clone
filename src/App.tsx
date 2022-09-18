@@ -22,6 +22,10 @@ const Title = styled.h1`
     text-align: center;
     font-size: 48px;
     margin: 100px 0px;
+    @media screen and (max-width: 512px) {
+        margin: 30px;
+        font-size: 40px;
+    }
 `;
 const CreateToDoBtn = styled.button`
     font-size: 20px;
@@ -29,6 +33,9 @@ const CreateToDoBtn = styled.button`
     &:hover {
         color: #0984e3;
         background-color: #cde6ff;
+    }
+    @media screen and (max-width: 512px) {
+        background-color: #dfdfdf;
     }
 `;
 const CreateCategoryBtn = styled(CreateToDoBtn)``;
