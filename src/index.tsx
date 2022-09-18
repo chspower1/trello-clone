@@ -5,11 +5,24 @@ import { createGlobalStyle, ThemeProvider } from "styled-components";
 import reset from "styled-reset";
 import { lightTheme } from "./theme";
 import { RecoilRoot } from "recoil";
+import "./fonts/fonts.css";
 
 const GlobalStyle = createGlobalStyle`
     ${reset}
     button{
         border: none;
+    }
+    *{
+        font-family: "Sebang";
+        color:#2d3436;
+    }
+    body{
+        font-family: "Sebang";
+        box-sizing: border-box;
+        color:#2d3436;
+    }
+    h1{
+        font-family:"SebangBold";
     }
 `;
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);

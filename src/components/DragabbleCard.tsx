@@ -2,31 +2,45 @@ import { Draggable } from "@hello-pangea/dnd";
 import { Btn } from "./../App";
 import React from "react";
 import styled from "styled-components";
+import { ToDo } from "../atom";
 
 interface IDragabbleCardProps {
-    item: string;
+    toDo: ToDo;
     index: number;
 }
-const Card = styled.div`
+const Card = styled.div<{ isDragging: boolean }>`
     display: flex;
     align-items: center;
-    /* width: 80%; */
+    justify-content: space-between;
     height: auto;
-    padding: 10px 30px;
-    margin-top: 10px;
-    background-color: ${(props) => props.theme.cardColor};
+    padding: 10px;
     color: ${(props) => props.theme.cardTextColor};
-    border-radius: 10px;
+    transition: background-color 1s ease;
+    background-color: ${(props) => (props.isDragging ? "#a5c3da" : "#dfe6e9")};
+    border: 1px solid white;
+`;
+const DelBtn = styled.button`
+    background: none;
+    transition: color 0.3s ease;
+    color: #d47373;
+    &:hover {
+        color: #d63031;
+    }
 `;
 
-function DragabbleCard({ item, index }: IDragabbleCardProps) {
-    console.log(item, "has been rendered");
+function DragabbleCard({ toDo, index }: IDragabbleCardProps) {
+    console.log(toDo, "has been rendered");
     return (
-        <Draggable key={item} draggableId={item} index={index}>
-            {(magic) => (
-                <Card ref={magic.innerRef} {...magic.draggableProps} {...magic.dragHandleProps}>
-                    {item}
-                    {/* <Btn>Click!</Btn> */}
+        <Draggable key={toDo.id} draggableId={String(toDo.id)} index={index}>
+            {(magic, snapshot) => (
+                <Card
+                    ref={magic.innerRef}
+                    {...magic.draggableProps}
+                    {...magic.dragHandleProps}
+                    isDragging={snapshot.isDragging}
+                >
+                    {toDo.text}
+                    <DelBtn>X</DelBtn>
                 </Card>
             )}
         </Draggable>
